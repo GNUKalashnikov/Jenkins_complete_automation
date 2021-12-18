@@ -7,7 +7,7 @@
 
 # **Project Overview:**
 - Any contibution/update made to the application and pushed to github will be automatically deployed to the servers running the application
-- IT mean the customers using the application over the intenet will be able to see and experience any of the changes.
+- Meaning the customers using the application over the intenet will be able to see and experience any of the changes.
 - changes can be made by any developer, it will be checked(tested) and merged with the overall project and the new updated version of the overall project will be deployed on AWS infrastructure
 ![](pics/overall_flow.png)
 # **AWS Overview**
