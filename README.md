@@ -463,10 +463,49 @@ will need to be updated every time jenkins ip changes!!!!!
 > JOB3 & JOB4 will make the pipeline continous Deployment
 
 > JOB3 (setting up the Database)
+- we will be adding the .pem aws key to jenkins in this job so that we can ssh into the instances
 - if we are given a new ec2 instance running ubuntu 18.04 and we update this job with the IP address of that instance and run the job, then the ec2 insatnce will be made into a database running mongodb
-- any updates made and pushed to git hub will be updated on the database instance
+- any updates made and pushed to git hub will be updated on the database instance that is laready live
 - mongo.conf file will be changed
 - **start creating JOB3**
+- select new item
+![](pics/instances/jenkins/job3/1.png)
+- select freestyle project
+![](pics/instances/jenkins/job3/2.png)
+- general
+![](pics/instances/jenkins/job3/3.png)
+- source code management
+![](pics/instances/jenkins/job3/4.png)
+- build enivronment(add aws .pem file in ssh agent)
+![](pics/instances/jenkins/job3/5.png)
+![](pics/instances/jenkins/job3/6.png)
+![](pics/instances/jenkins/job3/7.png)
+- Build: execute shell(write script)
+![](pics/instances/jenkins/job3/8.png)
+- post-build-action: build-other-project:job4
+![](pics/instances/jenkins/job3/9.png)
+**Add JOB3 in post-build-action: build-other-jobs**
+> JOB4(setting up the Internet-facing app)
+- if we are given a new ec2 instance running ubuntu 18.04 and we update this job with the IP address of that instance and run the job, then the ec2 insatnce will be made into a Internet-Facing web app
+- any updates made and pushed to git hub will be updated on the Instance that is already live
+- environment varibale will be created by editing the .bashrc file
+- environment variable created will be used to link database to app
+- **start creating JOB4**
+- click on new item
+![](pics/instances/jenkins/job4/1.png)
+- select freestyle project
+![](pics/instances/jenkins/job4/2.png)
+- general
+![](pics/instances/jenkins/job4/3.png)
+- source code management
+![](pics/instances/jenkins/job4/4.png)
+- build environment(SSH Agent)
+![](pics/instances/jenkins/job4/5.png)
+- Build: execute shell(edit ip's as they change)
+![](pics/instances/jenkins/job4/6.png)
 
+**no down stream jobs for this job**
 
-
+# Result:
+- CI/CD piple for application running on AWS Infrastruture is successful
+- Apllication viwed by the customer will always be deployed with all the updates
