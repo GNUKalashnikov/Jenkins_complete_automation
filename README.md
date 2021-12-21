@@ -502,7 +502,13 @@ will need to be updated every time jenkins ip changes!!!!!
 - build environment(SSH Agent)
 ![](pics/instances/jenkins/job4/5.png)
 - Build: execute shell(edit ip's as they change)
+- 2 option: start app maunally or start app from jenkins
+- option1: start app manually
 ![](pics/instances/jenkins/job4/6.png)
+- option2: start app from jenkins(need to figure our .bashrc sourcing)
+![](pics/instances/jenkins/job4/7.png)
+
+
 
 **no down stream jobs for this job**
 
