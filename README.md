@@ -1,5 +1,6 @@
 # **Concepts & Tools:**
-- in this project we will be globally deploying our apllication in a two-tier architecture (internet-facing-app & secure Database)
+- in this project we will be globally deploying our application in a two-tier architecture (internet-facing-app & secure Database)
+- create a CI/CD pipeline to make sure the application deployed globally is constantly getting updated as and when changes are made and pused to github
 - **AWS** for infrastructure
 - **Jenkins** for automation (CI/CD pipeline)
 - **github** as remote repository hold our latest/most recently updated version of application
