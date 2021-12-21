@@ -400,3 +400,19 @@
 ![](pics/instances/jenkins/webhook/6.png)
 
 **NOTE: we have not yet deployed the private key on jenkins, we will do so while creating the first job in jenkins**
+## Step 2: set up 4 JOBS on Jenkins:
+>JOB 1
+- we will be adding the private key of github in this job
+- this job is to be triggered as soon as any individual pushes their changes to git hub(to their own branch)
+- this job is executed to check if all the files are production ready(the changes made by the individual dont affect the applications ability to pass the tests)
+- then finally job2 is invoked if job1 executes sucessfully
+- **start creating JOB1**
+![](pics/instances/jenkins/job1/1.png)
+- select free style project
+![](pics/instances/jenkins/job1/2.png)
+- general(https code)
+![](pics/instances/jenkins/job1/3.png)
+![](pics/instances/jenkins/job1/4.png)
+- Source code managment: we enter the github private key here
+![](pics/instances/jenkins/job1/5.png)
+![](pics/instances/jenkins/job1/6.png)
