@@ -426,6 +426,7 @@
 ![](pics/instances/jenkins/job1/12.png)
 - post build action(invoke job 2)
 ![](pics/instances/jenkins/job1/13.png)
+**ADD JOB2 to post-build-action:build-other-jobs**
 > JOB 2 (Continous Integration)
 - this job run if job1 is sucessfull
 - this job will merge the dev1 branch to the main branch on github
@@ -433,8 +434,22 @@
 - if sucessfull will invoke job3
 - we will use git publisher plug in to merge
 - **start creating JOB2**
-- test
-
+![](pics/instances/jenkins/job2/1.png)
+- select freestyle project
+![](pics/instances/jenkins/job2/2.png)
+- general(https link to github)
+![](pics/instances/jenkins/job2/3.png)
+- source code management
+![](pics/instances/jenkins/job2/4.png)
+- post build action(select git publisher)
+![](pics/instances/jenkins/job2/5.png)
+- if git publised not available add plugin
+![](pics/instances/jenkins/job2/6.png)
+- post build action: click on add branch
+![](pics/instances/jenkins/job2/7.png)
+- enter the branch to push changes to
+![](pics/instances/jenkins/job2/8.png)
+**Add JOB3 in post-build-action: build-other-jobs**
 
 
 
