@@ -416,3 +416,16 @@
 - Source code managment: we enter the github private key here
 ![](pics/instances/jenkins/job1/5.png)
 ![](pics/instances/jenkins/job1/6.png)
+![](pics/instances/jenkins/job1/7.png)
+![](pics/instances/jenkins/job1/8.png)
+![](pics/instances/jenkins/job1/9.png)
+![](pics/instances/jenkins/job1/10.png)
+- Build Trigger and Build Environment
+![](pics/instances/jenkins/job1/11.png)
+- Build 
+![](pics/instances/jenkins/job1/12.png)
+- post build action(invoke job 2)
+![](pics/instances/jenkins/job1/13.png)
+- **Start Creating JOB 2**
+
+
