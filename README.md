@@ -1,5 +1,5 @@
 # **Concepts & Tools:**
-- in this project we will be hosting our apllication in a two-tier architecture (internet-facing-app & secure Database)
+- in this project we will be globally deploying our apllication in a two-tier architecture (internet-facing-app & secure Database)
 - **AWS** for infrastructure
 - **Jenkins** for automation (CI/CD pipeline)
 - **github** as remote repository hold our latest/most recently updated version of application
@@ -18,9 +18,9 @@
  -  - Machines hosted in this subnet will be accessible from the intenet directly
  - **Private_subnet**
  - - Machines hosted in this subnet will not be accesable from the internet
- - - however we will provide a **Nat-Insatnce** so that the machines can acess the intenet(in case they need to perform any software updates)
- - **Jenkins_subnet
- - Bastion_subnet 
+ - - however we will provide a **Nat-Instance** so that the machines can acess the intenet(in case they need to perform any software updates)
+ - **Jenkins_subnet**
+ - **Bastion_subnet** 
 >> Each subnet will be attached to **Routing-Table** made for them:
 - 1. public_subnet : **public_RT**
 - - 1. Destination:10.0.0.0/16, Target:local
@@ -39,7 +39,7 @@
 >>>> Type of Instances(EC2):
 - Public_subnet:
 -    1. Internet-facing web app
--  2. Nat-Insance(move .pem file into machine)
+-  2. Nat-Insance(move .pem file into machine, disable checking source/destination, update Private_RT)
 - Private_subnet:
 -  3. Database
 - Jenkins_subnet:
@@ -260,8 +260,143 @@
 >DataBase(Private_subnet)
 - should not be accessable from the internet, hence no public IP is needed
 - should be able to acess the internet through NAT-Instance
+- pick AMI
+![](pics/instances/db/1.png)
+- pick family
+![](pics/instances/db/2.png)
+- select vpc, private_subnet, disable Public IP
+![](pics/instances/db/3.png)
+- storage(no change)
+![](pics/instances/db/4.png)
+- Add tag
+![](pics/instances/db/5.png)
+- select security group created for database
+![](pics/instances/db/6.png)
+- launch using appropriate key
+![](pics/instances/db/7.png)
+- SSH into Instance
+![](pics/instances/db/8.png)
+- make sure ping, update works
+![](pics/instances/db/9.png)
+- Run provising file to install mongodb
+![](pics/instances/db/10.png)
+     - provisioning script
+        ![](pics/instances/db/script.png)
+
+- make sure mongodb is running(status)
+![](pics/instances/db/11.png)
+- Edit the mongod.conf file(bindIP)
+![](pics/instances/db/12.png)
+![](pics/instances/db/13.png)
+- restart,enable mongodb
+![](pics/instances/db/14.png)
+- Git clone/ Rsync a repo with the necessary code to run the application
+![](pics/instances/db/15.png)
 
 
+> Internet-facing-app(public_subnet)
+- this ec2 will be launched inside the public_subnet
+- will be accessable from the internet
+- this is how users will interact with our application
+- create environment variable to establish connection with database
+- select the AMI
+![](pics/instances/app/1.png)
+- select the family
+![](pics/instances/app/2.png)
+- Select the VPC, Public_subnet, enable public IP
+![](pics/instances/app/3.png)
+- add storage(no changes)
+![](pics/instances/app/4.png)
+- add tag
+![](pics/instances/app/5.png)
+- select the security group created for app
+![](pics/instances/app/6.png)
+- launch the ec2 with correct key
+![](pics/instances/app/7.png)
+- ssh into the instance
+![](pics/instances/app/8.png)
+- Provisioing Script
+![](pics/instances/app/9.png)
+- - the script:
+- - ![](pics/instances/app/script.png)
+- edit the .bashrc file and source it(environemnt variable)
+![](pics/instances/app/10.png)
+![](pics/instances/app/11.png)
+![](pics/instances/app/12.png)
+- Rsync/Git-clone file required to launch application
+![](pics/instances/app/13.png)
+- navigate to app.js file-->npm install, npm start
+![](pics/instances/app/14.png)
+![](pics/instances/app/15.png)
 
+** now the Application is up and Running on AWS provided servers, users from all over the world can access The application and utilize all of its features**
 
+# Automation Using Jenkins
+- jenkins is going to be set up to start running a jobs every time an individual-contributer submits their piece of work to GitHub (git push)
+- this job that is invoked by a git push using webhook, will further start others jobs
+- upon the completion of all the jobs the servers running the application will have all the latest updates and changes made by any individual contibuter  
+## Step one: Create a jenkins server on AWS
+- will be created inside the jenkins_subnet of the VPC
+- should be able to Rsync and SSH into Internet-Facing app(public_subnet) and Database(private_subnet)
+- plug-in: Nodejs(also add in config), Git Published, SSH Agent, all the recommended ones
+- pick the AMI
+![](pics/instances/jenkins/1.png)
+- pick the family
+![](pics/instances/jenkins/2.png)
+- select VPC, Jenkins_subnet, enable public
+![](pics/instances/jenkins/3.png)
+- add storage(no changes)
+![](pics/instances/jenkins/4.png)
+- add tag
+![](pics/instances/jenkins/5.png)
+- choose the jenkins security group
+![](pics/instances/jenkins/6.png)
+- launch the app with the correct key
+- ec2 is launched:
+![](pics/instances/jenkins/7.png)
+- copy the ssh command
+![](pics/instances/jenkins/8.png)
+- ssh from local host and run provision file
+![](pics/instances/jenkins/script.png)
+![](pics/instances/jenkins/9.png)
+- now jenkins will be running on port 8080
+![](pics/instances/jenkins/10.png)
+- copt the public ip of jenkins ec2
+![](pics/instances/jenkins/11.png)
+> in browser enter "'jenkins_ip':8080"
+- get the password from ec2 and paste to proceed
+![](pics/instances/jenkins/12.png)
+- install suggested plugins
+![](pics/instances/jenkins/13.png)
+- create user
+![](pics/instances/jenkins/14.png)
+- Instance configuration(no change)
+![](pics/instances/jenkins/15.png)
+> install Plug-ins
+- navigate to manage jenkins
+![](pics/instances/jenkins/16.png)
+- naviagte to manage plugins
+![](pics/instances/jenkins/17.png)
+- in Available install without restart: SSH Agent
+![](pics/instances/jenkins/18.png)
+- install without restart: nodeJS
+![](pics/instances/jenkins/19.png)
+- add nodejs in global tool configuration
+![](pics/instances/jenkins/19.1.png)
+![](pics/instances/jenkins/19.2.png)
+![](pics/instances/jenkins/19.3.png)
+> create a webhook from github to jenkins
+- generate ssh key on local machine(.ssh) using command:
+-               ssh-keygen -t ed25519 -C "your_email@example.com"
+- generate github key(public & private)
+![](pics/instances/jenkins/webhook/1.png)
+- keys are generated(cat---> copy keys)
+![](pics/instances/jenkins/webhook/2.png)
+- deploy public key on github
+![](pics/instances/jenkins/webhook/3.png)
+![](pics/instances/jenkins/webhook/4.png)
+- create a webhook on github(add jenkisn IP)
+![](pics/instances/jenkins/webhook/5.png)
+![](pics/instances/jenkins/webhook/6.png)
 
+**NOTE: we have not yet deployed the private key on jenkins, we will do so while creating the first job in jenkins**
