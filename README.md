@@ -426,6 +426,15 @@
 ![](pics/instances/jenkins/job1/12.png)
 - post build action(invoke job 2)
 ![](pics/instances/jenkins/job1/13.png)
-- **Start Creating JOB 2**
+> JOB 2 (Continous Integration)
+- this job run if job1 is sucessfull
+- this job will merge the dev1 branch to the main branch on github
+- the contents of the main branch is what that will get delivered to the servers
+- if sucessfull will invoke job3
+- we will use git publisher plug in to merge
+- **start creating JOB2**
+- test
+
+
 
 
