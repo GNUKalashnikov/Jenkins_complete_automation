@@ -1,6 +1,6 @@
 # **Concepts & Tools:**
 - in this project we will be globally deploying our application in a two-tier architecture (internet-facing-app & secure Database)
-- create a CI/CD pipeline to make sure the application deployed globally is constantly getting updated as and when changes are made and pused to github
+- create a CI/CD pipeline to make sure the application deployed globally is constantly getting updated as and when changes are made and pushed to github
 - **AWS** for infrastructure
 - **Jenkins** for automation (CI/CD pipeline)
 - **github** as remote repository hold our latest/most recently updated version of application
@@ -8,6 +8,14 @@
 - **mongodb** for database
 
 # **Project Overview:**
+> Infrastructure(AWS):
+- We will be hosting 5 Ec2(computer) machines in 4 Subnets within a single VPC
+
+- making sure the Database is  not accessible from the internet (security reasons)
+- also give the database access to the internet though a NAT-Instance(to perform updates,etc)
+- Jenkins instance to automate the deployment(CI/CD)
+-  
+> Automation:
 - Any contibution/update made to the application and pushed to github will be automatically deployed to the servers running the application using the CI/CD pipeline created using Jenkins.
 - Meaning the customers using the application over the intenet will be able to see and experience any of the changes.
 - changes can be made by any developer, it will be checked(tested) and merged with the overall project and the new updated version of the overall project will be deployed on AWS infrastructure
@@ -397,6 +405,7 @@
 ![](pics/instances/jenkins/webhook/3.png)
 ![](pics/instances/jenkins/webhook/4.png)
 - create a webhook on github(add jenkisn IP)
+will need to be updated every time jenkins ip changes!!!!!
 ![](pics/instances/jenkins/webhook/5.png)
 ![](pics/instances/jenkins/webhook/6.png)
 
@@ -451,6 +460,13 @@
 - enter the branch to push changes to
 ![](pics/instances/jenkins/job2/8.png)
 **Add JOB3 in post-build-action: build-other-jobs**
+> JOB3 & JOB4 will make the pipeline continous Deployment
+
+> JOB3 (setting up the Database)
+- if we are given a new ec2 instance running ubuntu 18.04 and we update this job with the IP address of that instance and run the job, then the ec2 insatnce will be made into a database running mongodb
+- any updates made and pushed to git hub will be updated on the database instance
+- mongo.conf file will be changed
+- **start creating JOB3**
 
 
 
