@@ -7,9 +7,9 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 
 # install nginx
-#sudo apt-get install nginx -y
-#sudo systemctl restart nginx
-#Sudo systemctl enable nginx
+sudo apt-get install nginx -y
+sudo systemctl restart nginx
+sudo systemctl enable nginx
 
 # install git
 sudo apt-get install git -y
