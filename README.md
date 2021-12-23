@@ -59,6 +59,7 @@
 1. Internet-Facing app:
 - 1. ssh from local machine
 - 2. access to port 3000(this is where the applicaion is running)
+- 3. http, https from anywhere(for nginx to work)
 2. Nat_Instance:
 - 1. ssh from local machine
 - 2. All TCP , port 0-65535, source: 0.0.0.0/0 (so that we can peform update inside DB)
@@ -120,7 +121,7 @@
 - choose target as Internet-Gateway
 ![](pics/routetable/jenkins_rt/4.png)
 >Bastion_Subnet_Routing-Table:
-- create routing table
+- Create routing table
 ![](pics/routetable/bastion_rt/1.png)
 ![](pics/routetable/bastion_rt/2.png)
 - Edit Routes
@@ -334,6 +335,9 @@
 ![](pics/instances/app/12.png)
 - Rsync/Git-clone file required to launch application
 ![](pics/instances/app/13.png)
+- set up reverse proxy
+- sudo nano /etc/nginx/sites-avaiable/default
+- edit the location\ part in server
 - navigate to app.js file-->npm install, npm start
 ![](pics/instances/app/14.png)
 ![](pics/instances/app/15.png)
